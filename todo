@@ -1,0 +1,24 @@
+
+
+[] form helpers - useFormState
+[] upload components
+ - generic
+[] 
+
+--- things I want solved
+
+[] form state
+[] upload pages, ideally completely built out
+[x] firebase stuff
+[x] scrolling
+ [] fix jittering
+//
+
+(
+  <Scrollable>
+    <Page id="">
+    </Page>
+    <Page id="">
+    </Page>
+  </Scrollable>
+)

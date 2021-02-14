@@ -1,0 +1,98 @@
+import $ from 'jquery';
+import {useEffect} from 'react';
+
+const lock = f => {
+  let _lock = false;  
+  return [(...args) => {
+    if (_lock) return;
+    _lock = true;
+    f(...args, () => _lock = false);
+  }, () => _lock];
+}
+
+// TODO: don't use $
+const [scrollTo, isScrolling] = lock((hash, unlock) => {
+  let isTop;
+  // if (hash instanceof Array) {
+  //   [hash, isTop] = hash;
+  // }
+  hash = hash.replace('.', '\\.');
+  let scrollTop;
+  if (isTop) {
+    scrollTop = 0;
+  } else {
+    scrollTop = $(hash).offset().top;
+  }
+  $(document.scrollingElement)
+    .animate({scrollTop}, 200, () => {
+      unlock();
+      if (!isTop) {
+        window.location.hash = hash;
+      } else {
+        window.location.hash = '';
+      }
+  });
+});
+
+function visible(el) {
+  let top = el.offsetTop;
+  let left = el.offsetLeft;
+  const width = el.offsetWidth;
+  const height = el.offsetHeight;
+
+  while (el.offsetParent) {
+    el = el.offsetParent;
+    top += el.offsetTop;
+    left += el.offsetLeft;
+  }
+
+  return (
+    top < (window.pageYOffset + window.innerHeight) &&
+    left < (window.pageXOffset + window.innerWidth) &&
+    (top + height) > window.pageYOffset &&
+    (left + width) > window.pageXOffset
+  );
+}
+
+// Get rid of this
+function throttle(fn, wait) {
+  var time = Date.now();
+  let called = false, timeout;
+  return function() {
+    if ((time + wait - Date.now()) < 0) {
+      fn();
+      called = true;
+      time = Date.now();
+    }
+    if (!timeout) {
+      timeout = setTimeout(() => {
+        clearTimeout(timeout);
+      });
+    }
+  }
+}
+
+// TODO: this is nasty
+const useScroll = (sections, onScroll = () => {}) => {
+  let lastHash;
+  useEffect(() => {
+    $(window).on('scroll', throttle(_ => {
+      if (isScrolling()) return;
+      const from = lastHash;
+      const sectionElements = sections.map(x => [$(x)[0], x]);
+      for (const [elem, hash] of sectionElements) {
+        if (visible(elem) && from !== hash) {
+          scrollTo(hash);
+          lastHash = hash;
+          onScroll(hash);
+          break;
+        }
+      }
+    }, 60));  
+  }, [sections]);
+  const unsubscribe = () => $(window).off('scroll');
+  const sectionScrollers = sections.map(section => () => scrollTo(section));
+  return [sectionScrollers, unsubscribe];
+};
+
+export default useScroll;

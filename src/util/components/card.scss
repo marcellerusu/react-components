@@ -1,0 +1,112 @@
+
+// Variables
+$link-color: #0d6efd;
+$border-color: #8080806e;
+
+* {
+  transition: color .15s ease-in-out,
+    background-color .15s ease-in-out,
+    border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+}
+.muted {
+  color: #00000088;
+}
+
+.body {
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+// meta classes
+.--padding-light {
+  padding: 10px;
+}
+
+.--padding {
+  padding: 15px;
+}
+
+.--border-radius {
+  border-radius: 3px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+  font-weight: 600;
+}
+
+
+
+// base card styling
+.card {
+  @extend .--border-radius;
+  display: flex;
+  flex-direction: column;
+  border: $border-color 1px solid;
+}
+
+// children borders & padding
+.card {
+  >*:not(img) {
+    @extend .--padding;
+  }
+
+  >:not(:last-child) {
+    border-bottom: $border-color 1px solid;
+  }
+}
+
+.card .card {
+  padding: 0;
+}
+
+// -- Card children --
+.card {
+  .card-header, .footer {
+    background: rgba(128, 128, 128, 0.075);
+  }
+  .footer {
+    padding: 2px;
+  }
+  background: white;
+  > a + a {
+    margin-left: 1rem;
+  }
+  p {
+    margin-top: 0;
+  }
+  &.center {
+    text-align: center;
+    button {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  &.right {
+    text-align: right;
+    button {
+      margin-left: auto;
+    }
+  }
+  button {
+    border: none;
+  }
+  input {
+    border: none;
+  }
+  textarea {
+    border: none;
+  }
+  select {
+    border: none;
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}

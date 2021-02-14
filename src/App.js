@@ -1,24 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
-function App() {
+import {Scrollable, Page} from './components/scroll';
+
+function App() { 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Scrollable>
+      <Page id="home">
+        Content in page 1
+      </Page>
+      <Page id="about">
+        About page
+      </Page>
+    </Scrollable>
   );
 }
 
