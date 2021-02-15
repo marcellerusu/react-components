@@ -34,7 +34,7 @@ const [scrollTo, isScrolling] = lock((hash, unlock) => {
   });
 });
 
-function visible(el) {
+export function isVisible(el) {
   let top = el.offsetTop;
   let left = el.offsetLeft;
   const width = el.offsetWidth;
@@ -55,7 +55,7 @@ function visible(el) {
 }
 
 // Get rid of this
-function throttle(fn, wait) {
+export function throttle(fn, wait) {
   var time = Date.now();
   let called = false, timeout;
   return function() {
@@ -81,7 +81,7 @@ const useScroll = (sections, onScroll = () => {}) => {
       const from = lastHash;
       const sectionElements = sections.map(x => [$(x)[0], x]);
       for (const [elem, hash] of sectionElements) {
-        if (visible(elem) && from !== hash) {
+        if (isVisible(elem) && from !== hash) {
           scrollTo(hash);
           lastHash = hash;
           onScroll(hash);
