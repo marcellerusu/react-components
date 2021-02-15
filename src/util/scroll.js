@@ -88,11 +88,10 @@ const useScroll = (sections, onScroll = () => {}) => {
           break;
         }
       }
-    }, 60));  
+    }, 60));
+    return () => $(window).off('scroll');
   }, [sections]);
-  const unsubscribe = () => $(window).off('scroll');
-  const sectionScrollers = sections.map(section => () => scrollTo(section));
-  return [sectionScrollers, unsubscribe];
+  return sections.map(section => () => scrollTo(section));
 };
 
 export default useScroll;
