@@ -30,8 +30,6 @@ export const Number = {
   }
 };
 
-// Email
-
 const construct = value => {
   if (value.__type) return value;
   if (typeof value === 'string') {

@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import Fixed from '.';
 
 const Container = styled.div`
-margin-left: 10%;
-margin-right: 10%;
-margin-top: 10%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 10%;
 `;
 
 const Header = styled.header`
