@@ -9,10 +9,13 @@ export const sortFunction = ({col, factor}) => (a, b) => {
 
 export const fillEmptyColumnNames = (columnNames, cols) => {
   if (new Set([...Object.keys(columnNames), ...cols]).size !== Object.keys(columnNames).length) {
+    const newColumnNames = {...columnNames};
     for (const key of cols) {
-      if (typeof columnNames[key] === 'undefined') {
-        columnNames[key] = key;
+      if (typeof newColumnNames[key] === 'undefined') {
+        newColumnNames[key] = key;
       }
     }
-   }
+    return newColumnNames;
+  }
+  return columnNames;
 }

@@ -14,8 +14,9 @@ export default ({data = [], columnNames}) => {
   const cols = Object.keys(data[0] || {});
   if (!columnNames) {
     columnNames = Object.fromEntries(cols.map(c => [c, c])); // ['a', 'b'] -> {a: 'a', b: 'b'}
+  } else {
+    columnNames = fillEmptyColumnNames(columnNames, cols);
   }
-  fillEmptyColumnNames(columnNames, cols);
 
   const [sort, setSort] = useState({col: cols[0], factor: 1});
   data = data.sort(sortFunction(sort));
