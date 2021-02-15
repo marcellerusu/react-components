@@ -1,7 +1,7 @@
-import FixedExample from './components/fixed/example';
+import FormExample from './components/forms/example';
 
 function App() {
-  return <FixedExample/>;
+  return <FormExample/>;
 }
 
 export default App;

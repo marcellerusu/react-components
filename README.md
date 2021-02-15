@@ -12,8 +12,9 @@ Framework to build CMS style websites
 - [x] Scrollable pages
 - [x] Fixed Element
  - just use position: sticky
-- [-] Forms
-  - [ ] State
+- [ ] Forms ~
+  - [x] State ~ more
+   - [x] validation ~ more 
   - [ ] Async shit
   - [ ] UI
 
@@ -23,6 +24,6 @@ Framework to build CMS style websites
   - [ ] image modals
   - [ ] horizontal scrolling
 
-- [~] Cards
+- [] Cards ~
 
 - [ ] Overlay
