@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 import styled from 'styled-components';
 
 import {sortFunction, fillEmptyColumnNames} from './utils';
@@ -12,14 +12,16 @@ const Rotatable = styled.span`
 // TODO: styles - we will take render props, but have defaults
 export default ({data = [], columnNames}) => {
   const cols = Object.keys(data[0] || {});
-  if (!columnNames) {
-    columnNames = Object.fromEntries(cols.map(c => [c, c])); // ['a', 'b'] -> {a: 'a', b: 'b'}
-  } else {
-    columnNames = fillEmptyColumnNames(columnNames, cols);
-  }
+  columnNames = useMemo(() => {
+    if (!columnNames) {
+      return Object.fromEntries(cols.map(c => [c, c])); // ['a', 'b'] -> {a: 'a', b: 'b'}
+    } else {
+      return fillEmptyColumnNames(columnNames, cols);
+    }
+  }, [columnNames, data]);
 
   const [sort, setSort] = useState({col: cols[0], factor: 1});
-  data = data.sort(sortFunction(sort));
+  data = useMemo(() => data.sort(sortFunction(sort)), [data, sort]);
 
   return (
     <table>
