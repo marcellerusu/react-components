@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {useFormState, Email} from '.';
+import useForm, {Email} from '.';
 
 const Card = styled.div`
   margin: 20%;
@@ -12,11 +12,7 @@ const Form = styled.form`
 `;
 
 export default () => {
-  const {name, description, email} = useFormState({
-    name: '',
-    description: '',
-    email: Email.of('')
-  });
+  const {name, description, email} = useForm({name: '', description: '', email: Email.of('')});
   return (
     <Card>
       <Form>

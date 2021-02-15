@@ -37,6 +37,7 @@ const construct = value => {
   } else if (typeof value === 'number') {
     return Number.of(value);
   }
+  throw new Error(`Can't construct type for ${JSON.stringify(value)}`);
 };
 
 const deconstruct = valueOrType => {
@@ -59,7 +60,7 @@ const getDomType = ({__type}) => {
   }
 };
 
-export const useFormState = (options, watch = []) => {
+const useForm = (options, watch = []) => {
   const [state, setState] = useFreshState(constructFrom(options), watch);
 
   const onChange = key => e =>
@@ -81,3 +82,5 @@ export const useFormState = (options, watch = []) => {
 
   return formState;
 };
+
+export default useForm;
