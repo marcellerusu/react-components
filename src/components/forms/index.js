@@ -10,7 +10,7 @@ const FILE = Symbol('FILE');
 const SELECT = Symbol('SELECT');
 const NUMBER = Symbol('NUMBER');
 
-const TypeConstructor = (__type, value, required = false) => ({__type, value, required, valid: false});
+const TypeConstructor = (__type, value, required = false) => ({__type, value, required});
 
 export const Email = {
   of(value, required = true) {
