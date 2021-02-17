@@ -31,6 +31,9 @@ const useForm = (options, onSubmit) => {
         onChange: onChange(key),
         placeholder: `${firstCapital(...key)}...`,
         required: state[key].required,
+        label: {
+          children: <>{firstCapital(...key)}</>
+        }
       };
     }
     return _formState;
@@ -46,6 +49,6 @@ const useForm = (options, onSubmit) => {
   return [formState, form];
 };
 
-export const {Email, Float, Text, CustomType} = TypeConstructors;
+export const {Email, Float, Str, CustomType} = TypeConstructors;
 
 export default useForm;

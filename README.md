@@ -12,11 +12,15 @@ Framework to build CMS style websites
 - [x] Scrollable pages
 - [x] Fixed Element
  - just use position: sticky
-- [ ] Forms ~
+- [~] Forms - decent state
   - [x] State ~ more
    - [x] validation ~ more 
-  - [ ] Async shit
-  - [ ] UI
+  - [x] Async shit
+    - not sure what this means.. I think we already handle it
+  - [x] UI
+    - non-issue. We are making a hook, not a component
+  - [ ] labels
+    - [x] label name
 
 
 - [ ] Image stuff
@@ -24,6 +28,6 @@ Framework to build CMS style websites
   - [ ] image modals
   - [ ] horizontal scrolling
 
-- [] Cards ~
+- [ ] Cards ~
 
 - [ ] Overlay

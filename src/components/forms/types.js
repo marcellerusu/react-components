@@ -7,9 +7,9 @@ const TypeConstructors = {
       return TypeConstructor(EMAIL, value, required);
     }
   },
-  Text: { // TODO: come up with a better name
+  Str: { // TODO: come up with a better name
     of(value, required = true) {
-      return TypeConstructor(TEXT, value, required);
+      return TypeConstructor(STR, value, required);
     }
   },
   Float: {
@@ -26,7 +26,7 @@ const TypeConstructors = {
 }
 
 const EMAIL = Symbol('EMAIL');
-const TEXT = Symbol('TEXT');
+const STR = Symbol('STR');
 const FILE = Symbol('FILE');
 const SELECT = Symbol('SELECT');
 const FLOAT = Symbol('FLOAT');
@@ -36,7 +36,7 @@ const CUSTOM = Symbol('CUSTOM');
 export const construct = value => {
   if (value.__type) return value;
   if (typeof value === 'string') {
-    return TypeConstructors.Text.of(value);
+    return TypeConstructors.Str.of(value);
   } else if (typeof value === 'number') {
     return TypeConstructors.Float.of(value);
   }
