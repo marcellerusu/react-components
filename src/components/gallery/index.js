@@ -41,21 +41,22 @@ const DefaultItem = styled.img`
   width: 100%;
 `;
 
-const ItemWrapper = ({item, Item}) => {
-  const [overlay, setOverlay] = useState(false);
-  return (
-    <>  
-      <ItemContainer onClick={() => setOverlay(true)}>
+const ItemWrapper = ({item: [item, index], Item, activeItem, setActiveItem, maxIndex}) => (
+  <>  
+    <ItemContainer onClick={() => setActiveItem(index)}>
+      <Item item={item} />
+    </ItemContainer>
+    {activeItem === index &&
+      <Overlay
+        onExit={() => setActiveItem(-1)}
+        onNext={() => setActiveItem(index + 1 > maxIndex ? maxIndex : index + 1)}
+        onPrev={() => setActiveItem(index - 1 < 0 ? 0 : index - 1)}
+      >
         <Item item={item} />
-      </ItemContainer>
-      {overlay &&
-        <Overlay onExit={() => setOverlay(false)}>
-          <Item item={item} />
-        </Overlay>  
-      }
-    </>
-  );
-}
+      </Overlay>  
+    }
+  </>
+);
 
 const Gallery = ({
   items,
@@ -63,7 +64,8 @@ const Gallery = ({
   keyFunc = item => item,
   numColumns = 3
 }) => {
-  const cols = group(items, numColumns);
+  const cols = group(items.map((item, i) => [item, i]), numColumns);
+  const [activeItem, setActiveItem] = useState(-1);
   return (
     <Row>
       {cols.map(groupedItems =>
@@ -73,6 +75,9 @@ const Gallery = ({
               key={item}
               Item={Item}
               item={item}
+              activeItem={activeItem}
+              setActiveItem={setActiveItem}
+              maxIndex={items.length - 1}
             />
           ))}
         </Col>
