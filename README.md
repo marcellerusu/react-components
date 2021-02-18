@@ -24,8 +24,10 @@ Framework to build CMS style websites
 
 
 - [ ] Image stuff
-  - [ ] gallery layout
-  - [ ] image modals
+  - [x] gallery layout
+  - [-] image modals
+    - [x] modal
+    - [ ] switching between images
   - [ ] horizontal scrolling
 
 - [ ] Cards ~

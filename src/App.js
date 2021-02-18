@@ -1,7 +1,7 @@
-import FormExample from './components/forms/example';
+import GalleryExample from './components/gallery/example';
 
 function App() {
-  return <FormExample/>;
+  return <GalleryExample/>;
 }
 
 export default App;
