@@ -1,13 +1,10 @@
-import {useEffect, useRef} from 'react';
-
 import styled from 'styled-components';
 
 const Modal = styled.div`
+  display: flex;
+  flex-direction: row;
   width: calc(100% / 3);
   height: fit-content;
-  &:focus {
-    outline: none;
-  }
 `;
 
 const ModalContainer = styled.div`
@@ -22,29 +19,10 @@ const ModalContainer = styled.div`
   background: #80808091;
 `;
 
-export default ({children, onExit, onNext, onPrev}) => {
-  const handleKeyDown = e => {
-    switch (e.key) {
-      case 'Escape': return onExit();
-      // TODO: add actual arrows
-      case 'ArrowLeft': return onPrev();
-      case 'ArrowRight': return onNext();
-    }
-  };
-  const modalRef = useRef(null);
-  useEffect(() => {
-    modalRef.current.focus();
-  }, []);
-  return (
-    <ModalContainer onClick={onExit}>
-      <Modal
-        tabIndex="-1"
-        onClick={e => e.stopPropagation()}
-        onKeyDown={handleKeyDown}
-        ref={modalRef}
-      >
-        {children}
-      </Modal>
-    </ModalContainer>
-  );
-};
+export default ({children, onExit }) => (
+  <ModalContainer onClick={onExit}>
+    <Modal onClick={e => e.stopPropagation()}>
+      {children}
+    </Modal>
+  </ModalContainer>
+);

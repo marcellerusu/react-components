@@ -1,62 +1,59 @@
-import {useState} from 'react';
-import styled from 'styled-components';
+import React, {useState, useEffect, useRef, useContext} from 'react';
+
+import Arrow from '../../icons/left-arrow.svg';
 
 import {group} from './utils';
 
 import Overlay from '../overlay';
+import {ArrowImg, ImageContainer, Row, Col, DefaultItem, ItemContainer} from './components';
 
-const ItemContainer = styled.div`
-  width: 100%;
-  padding: 3px;
-  &:nth-child(even) {
-    padding-top: 0;
-  }
-  box-sizing: border-box;
-  &:first-child {
-    padding: 0 3px 3px 3px;
-  }
-  &:last-child {
-    padding: 3px 3px 0 3px;
-  }
-  > * {
-    transition: 0.1s;
-    &:hover {
-      transform: scale(1.01);
-      box-shadow: 0px 0px 7px #00000063;
+const GalleryContext = React.createContext(null);
+
+const LeftArrow = ({...props}) => <ArrowImg {...props} src={Arrow} />;
+const RightArrow = ({...props}) => <ArrowImg {...props} src={Arrow} flip />;
+
+const Modal = ({item}) => {
+  const {Item, activeItem, setActiveItem, maxIndex} = useContext(GalleryContext);
+  const onNext = () => setActiveItem(activeItem + 1 > maxIndex ? maxIndex : activeItem + 1);
+  const onPrev = () => setActiveItem(activeItem - 1 < 0 ? 0 : activeItem - 1);
+  const handleKeyDown = e => {
+    switch (e.key) {
+      case 'Escape': return setActiveItem(-1); // TODO: put in <Overlay/>
+      case 'ArrowRight': return onNext();
+      case 'ArrowLeft': return onPrev();
     }
-  }
-`;
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-`;
-const Col = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
+  };
+  const modalRef = useRef(null);
+  useEffect(() => {
+    modalRef.current.focus();
+  }, []);
 
-const DefaultItem = styled.img`
-  width: 100%;
-`;
-
-const ItemWrapper = ({item: [item, index], Item, activeItem, setActiveItem, maxIndex}) => (
-  <>  
-    <ItemContainer onClick={() => setActiveItem(index)}>
-      <Item item={item} />
-    </ItemContainer>
-    {activeItem === index &&
-      <Overlay
-        onExit={() => setActiveItem(-1)}
-        onNext={() => setActiveItem(index + 1 > maxIndex ? maxIndex : index + 1)}
-        onPrev={() => setActiveItem(index - 1 < 0 ? 0 : index - 1)}
+  return (
+    <Overlay onExit={() => setActiveItem(-1)}>
+      <ImageContainer
+        tabIndex="-1"
+        onKeyDown={handleKeyDown}
+        ref={modalRef}
       >
+        {activeItem > 0 && <LeftArrow onClick={onPrev} />}
         <Item item={item} />
-      </Overlay>  
-    }
-  </>
-);
+        {activeItem < maxIndex && <RightArrow onClick={onNext} />}
+      </ImageContainer>
+    </Overlay>
+  );
+};
+
+const ItemWrapper = ({item: [item, index]}) => {
+  const {Item, activeItem, setActiveItem} = useContext(GalleryContext);
+  return (
+    <>  
+      <ItemContainer onClick={() => setActiveItem(index)}>
+        <Item item={item} />
+      </ItemContainer>
+      {activeItem === index && <Modal item={item}/>}
+    </>
+  );
+};
 
 const Gallery = ({
   items,
@@ -66,23 +63,17 @@ const Gallery = ({
 }) => {
   const cols = group(items.map((item, i) => [item, i]), numColumns);
   const [activeItem, setActiveItem] = useState(-1);
+  const maxIndex = items.length - 1;
   return (
-    <Row>
-      {cols.map(groupedItems =>
-        <Col key={groupedItems.map(keyFunc).join('')}>
-          {groupedItems.map(item => (
-            <ItemWrapper
-              key={item}
-              Item={Item}
-              item={item}
-              activeItem={activeItem}
-              setActiveItem={setActiveItem}
-              maxIndex={items.length - 1}
-            />
-          ))}
-        </Col>
-      )}
-    </Row>
+    <GalleryContext.Provider value={{activeItem, setActiveItem, Item, maxIndex}}>
+      <Row>
+        {cols.map(groupedItems =>
+          <Col key={groupedItems.map(keyFunc).join('')}>
+            {groupedItems.map(item => <ItemWrapper key={item} item={item} />)}
+          </Col>
+        )}
+      </Row>
+    </GalleryContext.Provider>
   )
 };
 

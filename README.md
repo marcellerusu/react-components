@@ -28,9 +28,14 @@ Framework to build CMS style websites
   - [x] image modals
     - [x] modal
     - [x] switching between images
+    - [x] arrows
     - [ ] issue w image margins changing when rotating between images
   - [ ] horizontal scrolling
 
 - [ ] Cards ~
 
-- [ ] Overlay
+- [x] Overlay
+
+- Core Object extensions
+ - Object
+  - [x] Object.map
