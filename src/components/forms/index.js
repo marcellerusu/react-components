@@ -10,14 +10,12 @@ const update = (internalValue, domValue) => {
   return {...internalValue, value};
 };
 
-const constructFrom = options =>
-  Object.fromEntries(Object.keys(options).map(k => [k, construct(options[k])]));
-
-const constructUserState = state =>
-  Object.fromEntries(Object.keys(state).map(key => [key, state[key].value]));
+const constructFrom = options => Object.map(options, construct);
+const constructUserState = state => Object.map(state, ({value}) => value);
 
 const useForm = (options, onSubmit) => {
   // TODO: we should pass in something to the watch arr
+  // console.log(options, constructFrom(options))
   const [state, setState] = useFreshState(constructFrom(options), []);
   const onChange = key => e =>
     setState(old => ({...old, [key]: update(state[key], e.target.value)}));
