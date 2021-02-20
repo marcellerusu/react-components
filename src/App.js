@@ -1,7 +1,7 @@
-import GalleryExample from './components/gallery/example';
+import NavExample from './components/nav/example';
 
 function App() {
-  return <GalleryExample/>;
+  return <NavExample/>;
 }
 
 export default App;

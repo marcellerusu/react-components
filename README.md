@@ -42,3 +42,12 @@ Framework to build CMS style websites
 - Core Object extensions
  - Object
   - [x] Object.map
+
+
+# BIG PROJECT #1
+
+- video streaming website...
+ - [-] nav
+  - [ ]
+ - [ ] video cards
+ - [ ] 
