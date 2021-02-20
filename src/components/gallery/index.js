@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 
 import Arrow from '../../icons/left-arrow.svg';
 
@@ -18,23 +18,14 @@ const Modal = ({item}) => {
   const onPrev = () => setActiveItem(activeItem - 1 < 0 ? 0 : activeItem - 1);
   const handleKeyDown = e => {
     switch (e.key) {
-      case 'Escape': return setActiveItem(-1); // TODO: put in <Overlay/>
       case 'ArrowRight': return onNext();
       case 'ArrowLeft': return onPrev();
     }
   };
-  const modalRef = useRef(null);
-  useEffect(() => {
-    modalRef.current.focus();
-  }, []);
 
   return (
-    <Overlay onExit={() => setActiveItem(-1)}>
-      <ImageContainer
-        tabIndex="-1"
-        onKeyDown={handleKeyDown}
-        ref={modalRef}
-      >
+    <Overlay onExit={() => setActiveItem(-1)} onKeyDown={handleKeyDown}>
+      <ImageContainer>
         {activeItem > 0 && <LeftArrow onClick={onPrev} />}
         <Item item={item} />
         {activeItem < maxIndex && <RightArrow onClick={onNext} />}
