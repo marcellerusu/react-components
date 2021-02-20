@@ -3,6 +3,8 @@ import React, {useState, useContext} from 'react';
 import Arrow from '../../icons/left-arrow.svg';
 
 import {group} from './utils';
+import {onKey} from '../../util/dom';
+import * as fp from '../../util/fp';
 
 import Overlay from '../overlay';
 import {ArrowImg, ImageContainer, Row, Col, DefaultItem, ItemContainer} from './components';
@@ -16,12 +18,10 @@ const Modal = ({item}) => {
   const {Item, activeItem, setActiveItem, maxIndex} = useContext(GalleryContext);
   const onNext = () => setActiveItem(activeItem + 1 > maxIndex ? maxIndex : activeItem + 1);
   const onPrev = () => setActiveItem(activeItem - 1 < 0 ? 0 : activeItem - 1);
-  const handleKeyDown = e => {
-    switch (e.key) {
-      case 'ArrowRight': return onNext();
-      case 'ArrowLeft': return onPrev();
-    }
-  };
+  const handleKeyDown = fp.all(
+    onKey('ArrowLeft', onPrev),
+    onKey('ArrowRight', onNext)
+  );
 
   return (
     <Overlay onExit={() => setActiveItem(-1)} onKeyDown={handleKeyDown}>

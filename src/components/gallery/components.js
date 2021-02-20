@@ -52,7 +52,4 @@ export const ArrowImg = styled.img`
 
 export const ImageContainer = styled.div`
   display: flex;
-  &:focus {
-    outline: none;
-  }
 `;

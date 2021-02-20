@@ -2,7 +2,7 @@ import {useState, useEffect, useRef} from 'react';
 import $ from 'jquery';
 
 import {isVisible, throttle} from './scroll';
-import {compose} from './misc';
+import {compose} from './fp';
 
 export const useFreshState = (initState, watchArr) => {
   if (!(watchArr instanceof Array)) throw new Error('Need `watchArr` when using `useFreshState`');

@@ -1,7 +1,8 @@
 import {useRef, useEffect} from 'react';
 import styled from 'styled-components';
 
-import {callAll} from '../../util/misc';
+import {stopProp, onKey} from '../../util/dom';
+import * as fp from '../../util/fp';
 
 const Modal = styled.div`
   display: flex;
@@ -20,6 +21,9 @@ const ModalContainer = styled.div`
   width: 100vw;
   height: 100vh;
   background: #80808091;
+  &:focus {
+    outline: none;
+  }
 `;
 
 export default ({children, onExit, onKeyDown, ...props}) => {
@@ -32,10 +36,10 @@ export default ({children, onExit, onKeyDown, ...props}) => {
       tabIndex="-1"
       ref={modalRef}
       onClick={onExit}
-      onKeyDown={callAll(onKeyDown, e => e.key === 'Escape' && onExit())}
+      onKeyDown={fp.all(onKeyDown, onKey('Escape', onExit))}
       {...props}
     >
-      <Modal onClick={e => e.stopPropagation()}>
+      <Modal onClick={stopProp}>
         {children}
       </Modal>
     </ModalContainer>
