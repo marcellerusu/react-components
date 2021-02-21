@@ -32,7 +32,7 @@ Framework to build CMS style websites
     - [ ] issue w image margins changing when rotating between images
   - [ ] horizontal scrolling
 
-- [ ] dom utils
+- dom utils
  - [x] onKey
 
 - [ ] Cards ~
@@ -48,6 +48,8 @@ Framework to build CMS style websites
 
 - video streaming website...
  - [-] nav
-  - [ ]
+  - [x] basic layout
+  - [x] opaque background on scroll
+  - [ ] dropdown menus
  - [ ] video cards
  - [ ] 

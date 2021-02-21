@@ -57,17 +57,18 @@ export function isVisible(el) {
 // Get rid of this
 export function throttle(fn, wait) {
   var time = Date.now();
-  let called = false, timeout;
+  let timeout;
   return function() {
-    if ((time + wait - Date.now()) < 0) {
+    const delta = time + wait - Date.now();
+    if (delta < 0) {
       fn();
-      called = true;
       time = Date.now();
-    }
-    if (!timeout) {
+    } else if (!timeout) {
       timeout = setTimeout(() => {
+        fn();
         clearTimeout(timeout);
-      });
+        timeout = undefined;
+      }, delta);
     }
   }
 }
