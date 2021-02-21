@@ -54,21 +54,21 @@ export function isVisible(el) {
   );
 }
 
-// Get rid of this
 export function throttle(fn, wait) {
   var time = Date.now();
   let timeout;
-  return function() {
+  const later = () => {
+    fn();
+    time = Date.now();
+    clearTimeout(timeout);
+    timeout = undefined;
+  };
+  return () => {
     const delta = time + wait - Date.now();
     if (delta < 0) {
-      fn();
-      time = Date.now();
+      later()
     } else if (!timeout) {
-      timeout = setTimeout(() => {
-        fn();
-        clearTimeout(timeout);
-        timeout = undefined;
-      }, delta);
+      timeout = setTimeout(later, delta);
     }
   }
 }

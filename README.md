@@ -1,6 +1,8 @@
 What is react-cms
 
 WHY
+- React.js Application Framework 
+
 - Component + Hooks framework
 - State + Completely custom UI framework
 
@@ -14,7 +16,7 @@ Framework to build CMS style websites
  - just use position: sticky
 - [~] Forms - decent state
   - [x] State ~ more
-   - [x] validation ~ more 
+   - [x] validation ~ more
   - [x] Async shit
     - not sure what this means.. I think we already handle it
   - [x] UI
