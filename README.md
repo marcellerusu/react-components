@@ -21,8 +21,9 @@ Framework to build CMS style websites
     - not sure what this means.. I think we already handle it
   - [x] UI
     - non-issue. We are making a hook, not a component
-  - [ ] labels
+  - [x] labels
     - [x] label name
+    - [x] label for
 
 
 - [ ] Image stuff
@@ -44,6 +45,8 @@ Framework to build CMS style websites
 - Core Object extensions
  - Object
   - [x] Object.map
+
+- [ ] Component gallery
 
 
 # BIG PROJECT #1

@@ -13,9 +13,11 @@ const update = (internalValue, domValue) => {
 const constructFrom = options => Object.map(options, construct);
 const constructUserState = state => Object.map(state, ({value}) => value);
 
+const FORM_PREFIX = '__react-cms-form';
+const createId = key => `${FORM_PREFIX}_${key}`;
+
 const useForm = (options, onSubmit) => {
   // TODO: we should pass in something to the watch arr
-  // console.log(options, constructFrom(options))
   const [state, setState] = useFreshState(constructFrom(options), []);
   const onChange = key => e =>
     setState(old => ({...old, [key]: update(state[key], e.target.value)}));
@@ -23,13 +25,16 @@ const useForm = (options, onSubmit) => {
   const formState = useMemo(() => {
     const _formState = {}
     for (const key in state) {
+      console.log(key);
       _formState[key] = {
+        id: createId(key),
         value: deconstruct(state[key]),
         type: getDomType(state[key]),
         onChange: onChange(key),
         placeholder: `${firstCapital(...key)}...`,
         required: state[key].required,
         label: {
+          htmlFor: createId(key),
           children: <>{firstCapital(...key)}</>
         }
       };

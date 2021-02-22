@@ -1,7 +1,7 @@
-import NavExample from './components/nav/example';
+import FormExample from './components/forms/example';
 
 function App() {
-  return <NavExample/>;
+  return <FormExample/>;
 }
 
 export default App;

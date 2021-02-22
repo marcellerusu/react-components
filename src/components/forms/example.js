@@ -11,7 +11,10 @@ const Form = styled.form`
   flex-direction: column;
 `;
 
-const Name = CustomType(value => value.split(' '), arr => arr.join(' '));
+const Name = CustomType(
+  value => value.split(' '),
+  arr => arr.join(' ')
+);
 
 export default () => {
   const [{name, description, email}, form] = useForm(
