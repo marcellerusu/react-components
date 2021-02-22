@@ -4,17 +4,7 @@ import 'firebase/storage';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCzRgTR53KQv5GC3Bl69vUZXuyt9mOgwaA",
-  authDomain: "react-cms-9369d.firebaseapp.com",
-  projectId: "react-cms-9369d",
-  storageBucket: "react-cms-9369d.appspot.com",
-  messagingSenderId: "694609787402",
-  appId: "1:694609787402:web:33aa15e4c6bb604ec5fdf3",
-  measurementId: "G-BW8KNF5F0B"
-};
-
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
 
 export const db = firebase.firestore();
 
