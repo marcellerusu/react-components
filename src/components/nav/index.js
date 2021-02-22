@@ -18,7 +18,7 @@ const ShadowNav = styled.div`
   height: calc(4rem + 2px);
 `;
 
-export const List = styled.ul`
+const List = styled.ul`
   display: flex;
   flex-direction: row;
 `;
@@ -36,7 +36,9 @@ export default ({children}) => {
   return (
     <>  
       <Nav top={isTop}>
-        {children}
+        <List>
+          {children}
+        </List>
       </Nav>
       <ShadowNav />
     </>

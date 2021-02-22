@@ -16,7 +16,7 @@ const Name = CustomType(
   arr => arr.join(' ')
 );
 
-export default () => {
+const FormExample = () => {
   const [{name, description, email}, form] = useForm(
     {name: Name.of(''), description: '', email: Email.of('')},
     x => console.log(x)
@@ -35,3 +35,5 @@ export default () => {
     </Card>
   )
 };
+
+export default FormExample;

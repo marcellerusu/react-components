@@ -25,7 +25,6 @@ const useForm = (options, onSubmit) => {
   const formState = useMemo(() => {
     const _formState = {}
     for (const key in state) {
-      console.log(key);
       _formState[key] = {
         id: createId(key),
         value: deconstruct(state[key]),
