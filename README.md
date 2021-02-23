@@ -10,6 +10,10 @@ Framework to build CMS style websites
 
 - Sort of a component library, but its bigger
 
+- [-] drag n drop
+ - [x] basic example
+ - [x] non-trivial example
+ - [ ] create component
 - [ ] Very Generic Upload forms / pages
 - [x] Scrollable pages
 - [x] Fixed Element
@@ -49,6 +53,8 @@ Framework to build CMS style websites
 - [-] Component gallery
   - [x] prototype
 
+- [ ] implement styled-components
+- [ ] implement react.js
 
 # BIG PROJECT #1
 

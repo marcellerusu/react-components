@@ -1,7 +1,7 @@
-import ComponentGallery from './gallery';
+import ComponentLibrary from './componentLibrary';
 
 function App() {
-  return <ComponentGallery/>;
+  return <ComponentLibrary/>;
 }
 
 export default App;

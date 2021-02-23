@@ -10,19 +10,19 @@ import NavExample from '../components/nav/example';
 import ScrollExample from '../components/scroll/example';
 import StickyExample from '../components/sticky/example';
 import TableExample from '../components/table/example';
+import DragAndDropExample from '../components/dragAndDrop/example';
 
 const ComponentExamples = new Map([
-  ['FormExample', FormExample],
-  ['GalleryExample', GalleryExample],
+  ['Form', FormExample],
+  ['Gallery', GalleryExample],
   // ['LongListExample', LongListExample],
-  ['NavExample', NavExample],
+  ['Nav', NavExample],
   // ['OverlayExample', OverlayExample],
-  ['ScrollExample', ScrollExample],
-  ['StickyExample', StickyExample],
-  ['TableExample', TableExample]
+  ['Scroll', ScrollExample],
+  ['Sticky', StickyExample],
+  ['Table', TableExample],
+  ['DragAndDrop', DragAndDropExample]
 ]);
-
-const toItemName = key => key.match(/[A-Z][a-z]+/g)[0];
 
 export default () => (
   <Router>
@@ -32,9 +32,9 @@ export default () => (
           Welcome to React-CMS
         </Header>
         {[...ComponentExamples.map(([key]) => (
-          <Section key={`link-to-${key}`} title={toItemName(key) + 's'}>
+          <Section key={`link-to-${key}`} title={key}>
             <Item>
-              <Link to={`/${key}`}>{toItemName(key)}</Link>
+              <Link to={`/${key}`}>{key}</Link>
             </Item>
           </Section>
         )).values()]}
