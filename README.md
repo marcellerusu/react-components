@@ -46,7 +46,8 @@ Framework to build CMS style websites
  - Object
   - [x] Object.map
 
-- [ ] Component gallery
+- [-] Component gallery
+  - [x] prototype
 
 
 # BIG PROJECT #1
