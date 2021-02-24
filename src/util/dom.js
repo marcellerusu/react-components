@@ -3,3 +3,5 @@ export const onKey = (key, fn) => e => {
 };
 
 export const stopProp = e => e.stopPropagation();
+
+export const preventDefault = e => e.preventDefault();

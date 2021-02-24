@@ -13,7 +13,8 @@ Framework to build CMS style websites
 - [-] drag n drop
  - [x] basic example
  - [x] non-trivial example
- - [ ] create component
+ - [x] create component
+ - [ ] style dragged element
 - [ ] Very Generic Upload forms / pages
 - [x] Scrollable pages
 - [x] Fixed Element
