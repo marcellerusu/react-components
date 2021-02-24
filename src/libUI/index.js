@@ -21,15 +21,15 @@ const render = thing => {
 
 export const dom = new Proxy({}, {
   get(target, prop, receiver) {
-    return props => contents => {
-      // TODO: hack for template strings
-      contents = contents instanceof Array ? contents[0] : contents;
+    return props => (...contents) => {
       return () => {
         const elem = document.createElement(prop);
         for (const key in props) {
           elem[key.toLowerCase()] = props[key];
         }
-        elem.appendChild(render(contents));
+        for (const content of contents) {
+          elem.appendChild(render(content));
+        }
         return elem;
       };
     };
