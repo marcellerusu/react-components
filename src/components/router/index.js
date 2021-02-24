@@ -48,7 +48,7 @@ export const Router = ({children}) => {
   useEffect(() => {
     window.onpopstate = () => {
       setCurrentPath(window.location.pathname);
-    }
+    };
   }, []);
   return (
     <RouterContext.Provider value={{currentPath, setCurrentPath}}>
