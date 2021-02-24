@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import {Link, Router, Route} from '../components/router';
 
 import SideNav, {Header, Section, Item, Container}  from '../components/sideNav';
 
@@ -40,13 +40,11 @@ export default () => (
         )).values()]}
       </SideNav>
       <div style={{width: '100%', height: '100vh', overflow: 'scroll'}}>
-        <Switch>
-          {[...ComponentExamples.map(([key, Component]) => (
-            <Route key={`view-${key}`} path={`/${key}`}>
-              <Component />
-            </Route>
-          )).values()]}
-        </Switch>
+        {[...ComponentExamples.map(([key, Component]) => (
+          <Route key={`view-${key}`} path={`/${key}`}>
+            <Component />
+          </Route>
+        )).values()]}
       </div>
     </Container>
   </Router>
