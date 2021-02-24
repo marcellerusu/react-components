@@ -53,8 +53,12 @@ Framework to build CMS style websites
 - [-] Component gallery
   - [x] prototype
 
+# big ideas
+
+- [ ] create new standard library
 - [ ] implement styled-components
-- [ ] implement react.js
+- [ ] implement react-router
+- [ ] implement react.js...
 
 # BIG PROJECT #1
 
