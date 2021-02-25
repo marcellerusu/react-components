@@ -1,13 +1,28 @@
-import {Component, mount, dom} from '.';
+import {withState, mount, dom} from '.';
 
-const App = Component(() => {
+const Container = props => dom.div({
+  ...props,
+  style: `
+    display: flex;
+    flex-direction: ${props.direction};
+    width: 100px;
+    height: 100px;
+    background: gray;
+  `
+});
+
+const InactiveLink = ({to, text}) => (
+  dom.a({href: to, onClick: e => e.preventDefault()})(text)
+);
+
+const App = withState(({state: direction = 'row', setState}) => {
   return (
-    dom.div({
-      onClick: e => console.log(e.target),
-      style: 'display: flex; flex-direction: column;'
+    Container({
+      direction,
+      onClick: e => setState(direction === 'row' ? 'column' : 'row')
     })(
-      dom.a({href: 'https://google.ca'})('Go to google'),
-      dom.a({href: 'https://google.ca'})('Go to google')
+      InactiveLink({to: 'https://google.ca', text: 'hmm'}),
+      InactiveLink({to: 'https://google.ca', text: 'hmm2'})
     )
   );
 });
@@ -16,5 +31,3 @@ mount(
   App,
   document.getElementById('root')
 );
-
-

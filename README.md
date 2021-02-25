@@ -62,8 +62,10 @@ Framework to build CMS style websites
 - [-] implement react.js...
   - [x] Hello world
   - [x] nested elements
-  - [ ] props
-  - [ ] state
+  - [x] props
+  - [x] state
+  - [ ] dom diffing
+  - [ ] re-implement all above react components in this new library
 
 # BIG PROJECT #1
 
