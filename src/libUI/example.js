@@ -1,28 +1,63 @@
-import {withState, mount, dom} from '.';
+import {withState, mount, dom, styled} from '.';
+import * as fp from '../util/fp';
+import {stopProp} from '../util/dom';
 
-const Container = props => dom.div({
-  ...props,
-  style: `
-    display: flex;
-    flex-direction: ${props.direction};
-    width: 100px;
-    height: 100px;
-    background: gray;
-  `
-});
+const Container = styled.div`
+  display: flex;
+  background: ${props => props.direction};
+  width: 100px;
+  height: 100px;
+`;
 
-const InactiveLink = ({to, text}) => (
-  dom.a({href: to, onClick: e => e.preventDefault()})(text)
-);
+const sortFn = (a, b) => {
+  if (typeof a === 'string') {
+    return a.localeCompare(b);
+  } else {
+    return a - b;
+  }
+}
 
-const App = withState(({state: direction = 'row', setState}) => {
+const Table = withState(({items = [], state: sort = {asc: 1}, setState: setSort}) => (
+  dom.table()(
+    dom.thead()(
+      dom.tr()(
+        dom.th({
+          onClick: fp.all(
+            stopProp,
+            () => setSort({prop: 'name', asc: sort.asc * -1})
+          )
+        })(
+          'Name'
+        ),
+        dom.th({
+          onClick: fp.all(
+            stopProp,
+            () => setSort({prop: 'id', asc: sort.asc * -1})
+          )
+        })(
+          'Id'
+        )
+      )
+    ),
+    dom.tbody()(
+      ...items.sort((a, b) => sortFn(a[sort.prop], b[sort.prop]) * sort.asc).map(({name, id}) => (
+        dom.tr()(
+          dom.td()(name),
+          dom.td()(id),
+        )
+      ))
+    )
+  )
+));
+
+const App = withState(({state: direction = 'green', setState: setDirection}) => {
   return (
     Container({
       direction,
-      onClick: e => setState(direction === 'row' ? 'column' : 'row')
+      style: 'width: 200px;',
+      onClick: e => setDirection(direction === 'green' ? 'red' : 'green')
     })(
-      InactiveLink({to: 'https://google.ca', text: 'hmm'}),
-      InactiveLink({to: 'https://google.ca', text: 'hmm2'})
+      Table({items: [{name: 'John', id: 1}, {name: 'Marcelle', id: 0}]})
     )
   );
 });

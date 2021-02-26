@@ -30,7 +30,6 @@ Framework to build CMS style websites
     - [x] label name
     - [x] label for
 
-
 - [ ] Image stuff
   - [x] gallery layout
   - [x] image modals
@@ -57,7 +56,10 @@ Framework to build CMS style websites
 # big ideas
 
 - [ ] create new standard library
-- [ ] implement styled-components...
+- [-] implement styled-components...
+  - [x] basic featureset
+  - [ ] use stylesheets
+  - [ ] transpile sass
 - [x] implement react-router...
 - [-] implement react.js...
   - [x] Hello world
@@ -65,6 +67,8 @@ Framework to build CMS style websites
   - [x] props
   - [x] state
   - [ ] dom diffing
+  - [ ] stop render chain
+  - [x] don't re mount/render the entire application
   - [ ] re-implement all above react components in this new library
 
 # BIG PROJECT #1
