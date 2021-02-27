@@ -67,9 +67,12 @@ Framework to build CMS style websites
   - [x] props
   - [x] state
   - [ ] dom diffing
-  - [ ] stop render chain
+  - [-] stop render chain
+  - [ ] implement hooks
+  - [-] useEffect
   - [x] don't re mount/render the entire application
   - [ ] re-implement all above react components in this new library
+    - [x] table
 
 # BIG PROJECT #1
 
