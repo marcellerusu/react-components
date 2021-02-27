@@ -66,6 +66,7 @@ Framework to build CMS style websites
   - [x] nested elements
   - [x] props
   - [x] state
+  - [ ] put state in `useState` function instead of props
   - [ ] dom diffing
   - [-] stop render chain
   - [ ] implement hooks
