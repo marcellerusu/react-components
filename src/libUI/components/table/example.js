@@ -1,11 +1,11 @@
-import {styled} from '../../index';
+import styled from '../../styled';
 
 import Table from '.';
 
 const Container = styled.div`
-margin-left: 10%;
-margin-right: 10%;
-margin-top: 10%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 10%;
 `;
 
 export default () => (

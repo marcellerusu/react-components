@@ -4,22 +4,6 @@ const states = {};
 export const mount = (component, elem) =>
   elem.appendChild(render(component));
 
-// create a stylesheet instead of using style prop
-export const styled = new Proxy({}, {
-  get(target, prop) {  
-    return (strArr, ...funcs) => (props = {}) => {
-      let style = strArr[0];
-      for (let i = 1; i < strArr.length; i++) {
-        style += funcs[i - 1](props) + strArr[i];
-      }
-      return dom[prop]({
-        ...props,
-        style: style + '\n' + props.style
-      });
-    }
-  }
-});
-
 const morphAttrs = (oldElem, newElem, id) => {
   // in future do diffs
   for (let prop of newElem.attributes) {
@@ -35,41 +19,46 @@ const morphAttrs = (oldElem, newElem, id) => {
   }
 };
 
+const morph = (oldElem, newElem) => {
+  // 1. should be a dom diff..??
+  oldElem.parentElement.replaceChild(newElem, oldElem);
+  // morphAttrs(oldElem, newElem, id);
+  // if (blah) render text?
+}
+
+const updateState = (newValue, state) => {
+  if (typeof newValue === 'function') {
+    return newValue(state);
+  } else {
+    return newValue;
+  }
+};
 
 // TODO: take out useEffect
-export const withState = (initState, component) => {
+export const withState = component => {
   const id = idCounter++;
-  states[id] = states[id] || {state: initState, props: undefined, effectConds: undefined};
+  states[id] = states[id] || {states: [], props: undefined};
+  let stateCounter = 0;
+  const useState = initialValue => {
+    states[id].states[stateCounter] = states[id].states[stateCounter] || initialValue;
+    const setState = currentStateCounter => newValue => {
+      states[id].states[currentStateCounter] = updateState(newValue, states[id].states[currentStateCounter]);
+      const newElem = render(() => {
+        stateCounter = 0;
+        return () => component({...states[id].props, useState})(id);
+      });
+      const oldElem = document.querySelector(`[data-lib-ui-id="${id}"]`);
+      morph(oldElem, newElem);
+    }
+    stateCounter++;
+    return [states[id].states[stateCounter - 1], setState(stateCounter - 1)];
+  };
 
-  // TODO: this is broken
-  const useEffect = (func, conditions) => {
-    if (!states[id].effectConds) {
-      func();
-    } else {
-      const condChange = conditions.zip(states[id].effectConds)
-        .some(([oldCond, newCond]) => oldCond !== newCond);
-      if (condChange) func();
-    }
-    states[id].effectConds = conditions;
-  }
-  const setState = newValue => {
-    // TODO: default value is not stored in `states[id]` so the first render will be wrong
-    states[id].state = typeof newValue === 'function'
-      ? newValue(states[id].state)
-      : newValue;
-    // states[id].state = newValue;
-    const newElem = render(() => () => component({...states[id].props, state: states[id].state, setState, useEffect})(id));
-    const oldElem = document.querySelector(`[data-lib-ui-id="${id}"]`);
-    // 1. should be a dom diff..??
-    oldElem.parentElement.replaceChild(newElem, oldElem);
-    // morphAttrs(oldElem, newElem, id);
-    // if (blah) render text?
-    
-  }
-    return props => {
-      states[id].props = props || states[id].props;
-    return () => component({...states[id].props, state: states[id].state, setState, useEffect})(id);
-    }
+  return props => {
+    states[id].props = states[id].props || props;
+    stateCounter = 0;
+    return () => component({...states[id].props, useState})(id);
+  };
 };
 
 const render = (elem) => {
@@ -110,8 +99,12 @@ export const dom = new Proxy({}, {
       return id => {
         const elem = document.createElement(prop);
         if (id !== undefined) states[id].domProps = states[id].domProps || {};
-        for (const key in props) {
-          elem[key.toLowerCase()] = props[key];
+        for (let key in props) {
+          if (key === 'className') {
+            elem.classList.add(props[key]);
+          } else {
+            elem[key.toLowerCase()] = props[key];
+          }
           if (id !== undefined) states[id].domProps[key.toLowerCase()] = props[key];
         }
         for (const content of contents) {

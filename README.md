@@ -58,19 +58,21 @@ Framework to build CMS style websites
 - [ ] create new standard library
 - [-] implement styled-components...
   - [x] basic featureset
-  - [ ] use stylesheets
+  - [x] use stylesheets
   - [ ] transpile sass
 - [x] implement react-router...
-- [-] implement react.js...
+- [-] lib-ui
   - [x] Hello world
   - [x] nested elements
   - [x] props
   - [x] state
-  - [ ] put state in `useState` function instead of props
+  - [x] put state in `useState` function instead of props
   - [ ] dom diffing
   - [-] stop render chain
+  - [ ] context
   - [ ] implement hooks
-  - [-] useEffect
+    - [x] useState
+    - [-] useEffect
   - [x] don't re mount/render the entire application
   - [ ] re-implement all above react components in this new library
     - [x] table
