@@ -48,7 +48,7 @@ Framework to build CMS style websites
 
 - Core Object extensions
  - Object
-  - [x] Object.map
+  - [x] Object.mapValues
 
 - [-] Component gallery
   - [x] prototype

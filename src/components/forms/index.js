@@ -10,8 +10,8 @@ const update = (internalValue, domValue) => {
   return {...internalValue, value};
 };
 
-const constructFrom = options => Object.map(options, construct);
-const constructUserState = state => Object.map(state, ({value}) => value);
+const constructFrom = options => Object.mapValues(options, construct);
+const constructUserState = state => Object.mapValues(state, ({value}) => value);
 
 const FORM_PREFIX = '__react-cms-form';
 const createId = key => `${FORM_PREFIX}_${key}`;
