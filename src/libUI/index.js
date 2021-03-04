@@ -1,76 +1,86 @@
-// const state = {
-//   _id: 0,
-//   componentProps: {},
-//   state: ['2', [{email: 'marcelle@rusu.com'}]],
-//   type: 'custom',
-//   domProps: null,
-//   children: [
-//     { 
-//       componentProps: {},
-//       state: null,
-//       type: 'div', // either dom type | 'custom' | 'primitive',
-//       domProps: {},
-//       children: [
-//         {
-//         }
-//       ]
-//     }
-//   ]
-// }
-
-
-let idCounter = 0;
+let state, idCounter = 0;
 export const Component = component => {
-  return componentProps => ({
+  return componentProps => (...children) => ({
     _id: idCounter++,
-    componentProps,
+    componentProps: {children, ...componentProps},
     component,
     state: [], // done at run time
     type: 'custom',
-    domProps: null,
     children: []
   });
 };
 
-export const mount = (component, root) => (
-  console.log(render(component)[0]),
-  root.appendChild(render(component)[0])
-);
+export const mount = (component, root) => {
+  state = component(); // TODO: I shouldn't need to call this
+  constructTree(state); // ideally not mutations
+  root.appendChild(render(state));
+};
+
+const constructTree = element => {
+  switch (element.type) {
+    case 'primitive':
+      return element;
+    case 'custom':
+      const {component, componentProps} = element;
+      if (component(componentProps) instanceof Array) {
+        throw `Custom components are not allowed to have multiple children`;
+      }
+      element.children = [component(componentProps)];
+      return constructTree(element.children[0])
+    default:
+      throw 'no type';
+  }
+};
+
+const getComponentById = (id, elem = state) => {
+  if (!elem) return undefined;
+  // if (elem.type === 'primitive') return 
+  if (elem._id === id) return elem;
+  return elem.children.find(el => getComponentById(id, el))
+}
+
+// TODO: implement
+let currentRenderId;
+let stateCounter = 0;
+export const useState = initialValue => {
+  const {state} = getComponentById(currentRenderId);
+  if (!state.length) {
+    if (stateCounter !== 0) throw 'WTF';
+    state[stateCounter] = initialValue;
+  }
+
+  const setState = newValue => {
+    state[stateCounter] = newValue;
+  };
+  stateCounter++
+  return [state[stateCounter - 1], setState];
+}
 
 const render = element => {
-  console.log('render', element);
   switch (element.type) {
-    // reached base case
-    case 'primitive':
+    // base case
     case undefined:
-      console.log({element});
       return document.createTextNode(element);
-    // still a component
-    case 'custom':
-      // probably needs to track state here
-      const component = element.component(element.componentProps);
-      console.log('component', component)
-      if (component.type !== 'custom') {
-        element.children = component.children;
-      } else {
-        element.children = render(component);
-      }
-      return element.children.map(render);
-    // dom element
-    default:
+    // dom.`type`
+    case 'primitive':
       return renderDomNode(element);
+    // lib-ui component
+    case 'custom':
+      currentRenderId = element._id;
+      // probably needs to track state here
+      return render(element.children[0])
   }
 };
 
 export const dom = new Proxy({}, {
   get(_, domType) {
     return domProps => (...children) =>
-      ({type: domType, domProps, children});
+      ({type: 'primitive', domType, domProps, children});
   }
 });
 
-const renderDomNode = ({type, domProps, children}) => {
-  const elem = document.createElement(type);
+const renderDomNode = ({domType, domProps, children}) => {
+  const elem = document.createElement(domType);
   for (const key in domProps) {
     if (key === 'className') {
       elem.classList.add(domProps[key]);
@@ -78,25 +88,26 @@ const renderDomNode = ({type, domProps, children}) => {
       elem[key.toLowerCase()] = domProps[key];
     }
   }
-  // console.log({type, domProps, children})
   for (const child of children) {
     elem.appendChild(render(child));
   }
   return elem;
 };
 
-
-
-const Header = Component(({name}) => (
-  dom.header()(name)
+const Header = Component(({id, children}) => (
+  dom.header({id})(...children)
 ));
 
 const App = Component(() => (
-  Header({name: 'Hello World!'})
+  Header({id: 'header'})(
+    dom.div()('HELLO'),
+    dom.h1()('world')
+  )
 ));
 
-const state = App();
+mount(
+  App(),
+  document.getElementById('root')
+);
 
-mount(state, document.getElementById('root'));
-
-console.log(state);
+console.log('here', state, getComponentById(2));
