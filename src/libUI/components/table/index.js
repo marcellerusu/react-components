@@ -1,4 +1,4 @@
-import {withState, dom} from '../../index';
+import {dom, Component} from '../..';
 import styled from '../../styled';
 
 import {sortFunction, fillEmptyColumnNames} from './utils';
@@ -10,9 +10,10 @@ const Rotatable = styled.span`
 `;
 
 // TODO: styles - we will take render props, but have defaults
-export default withState(({data = [], columnNames, useState}) => {
+export default Component(({data = [], columnNames}) => {
   const cols = Object.keys(data[0] || {});
-  const [sort, setSort] = useState({col: cols[0], factor: 1});
+  const [sort, setSort] = [{col: cols[0], factor: 1}, () => {}];
+  console.log(sort, data);
   if (!columnNames) {
     columnNames = Object.fromEntries(cols.map(c => [c, c])); // ['a', 'b'] -> {a: 'a', b: 'b'}
   } else {

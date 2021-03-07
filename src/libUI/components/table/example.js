@@ -1,4 +1,5 @@
 import styled from '../../styled';
+import {Component, dom} from '../..'
 
 import Table from '.';
 
@@ -8,11 +9,14 @@ const Container = styled.div`
   margin-top: 10%;
 `;
 
-export default () => (
-  Container()(
-    Table({
-      data: [{id: 1, name: 'Marcel'}, {id: 2, name: 'Alberto'}],
-      columnNames: {id: 'Employee #'}
-    })()
+export default Component(() => {
+  // const [value, setValue] = useState('boo')
+  return (
+    Container()(
+      Table({
+        data: [{id: 1, name: 'Marcel'}, {id: 2, name: 'Alberto'}],
+        columnNames: {id: 'Employee #'}
+      })
+    )
   )
-);
+});
