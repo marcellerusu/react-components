@@ -1,9 +1,24 @@
-Working Components
 ## Drag 'n Drop
  - [x] basic example
  - [x] non-trivial example
  - [x] create component
  - [ ] style dragged element
+
+## Forms
+  - [x] State
+    - [x] validation
+  - [x] labels
+    - [x] label name
+    - [x] label for
+
+## Styled Components
+- [x] basic featureset
+- [x] use stylesheets
+- [ ] transpile sass
+
+## Router
+- [x] implement basic router
+
 ## Misc
 - [x] Scrollable pages
 - [x] Fixed Element
@@ -12,12 +27,6 @@ Working Components
 - [ ] Component gallery
   - [x] prototype
 
-## Forms
-  - [x] State
-    - [x] validation
-  - [x] labels
-    - [x] label name
-    - [x] label for
 
 ## Images
   - [x] gallery layout
@@ -30,14 +39,6 @@ Working Components
 
 ## Dom utils
  - [x] onKey
-
-## Styled Components
-- [x] basic featureset
-- [x] use stylesheets
-- [ ] transpile sass
-
-## Router
-- [x] implement basic router
 
 ## Lib UI (custom front end library)
   - [x] Hello world
